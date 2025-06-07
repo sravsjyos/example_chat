@@ -1,0 +1,25 @@
+CREATE DATABASE product_db;
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT
+);
+INSERT INTO products (name, price, description) VALUES
+('Bluetooth Headphones', 59.99, 'Over-ear wireless Bluetooth headphones with noise cancellation'),
+('Webcam 1080p', 39.99, 'Full HD USB webcam with built-in microphone and privacy cover'),
+('Portable SSD 1TB', 109.99, 'High-speed external solid state drive with USB-C connectivity'),
+('Wireless Charger', 29.95, 'Fast Qi wireless charger pad compatible with iPhone and Android'),
+('Gaming Monitor 27"', 249.99, '27-inch 144Hz Full HD gaming monitor with ultra-thin bezel'),
+('Smart LED Desk Lamp', 42.50, 'Dimmable LED desk lamp with touch control and USB charging port'),
+('Ergonomic Office Chair', 189.00, 'Adjustable mesh office chair with lumbar support'),
+('Mechanical Pencil Set', 14.99, 'Set of 5 premium mechanical pencils with 0.5mm lead'),
+('Noise Cancelling Earbuds', 89.00, 'In-ear Bluetooth earbuds with active noise cancellation and mic'),
+('Graphic Drawing Tablet', 139.00, '10-inch pen tablet with pressure sensitivity and USB support');
+CREATE TABLE chat_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id VARCHAR(64) NOT NULL,
+    user_message TEXT NOT NULL,
+    bot_response TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
