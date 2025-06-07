@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Support Chatbot</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat-log" class="chat-log"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById("chat-log");
+        const userInput = document.getElementById("user-input");
+        const sendBtn = document.getElementById("send-btn");
+
+        // Generate a random session id (simple)
+        const sessionId = "session-" + Math.floor(Math.random() * 1000000);
+
+        function appendMessage(sender, message) {
+            const div = document.createElement("div");
+            div.classList.add("message", sender);
+            div.textContent = message;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage("user", message);
+            userInput.value = "";
+            
+            try {
+                const res = await fetch("http://localhost:8000/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ session_id: sessionId, message: message }),
+                });
+                const data = await res.json();
+                appendMessage("bot", data.response);
+            } catch (err) {
+                appendMessage("bot", "Error: Could not reach server.");
+            }
+        }
+
+        sendBtn.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", e => {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>
